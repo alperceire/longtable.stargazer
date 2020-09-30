@@ -41,8 +41,6 @@ longtable.stargazer = function(..., float = T, longtable.float = F,
     res = c(res[1:which(res == "\\hline \\\\[-1.8ex] ")[1] - 1], "\\endhead", res[which(res == "\\hline \\\\[-1.8ex] ")[1]:length(res)])
   }
   # Exporting
-  cat(res, sep = "\n")
-  # Exporting
   if(!is.null(filename)){
     cat(res, file = filename, sep = "\n")
     # Message
