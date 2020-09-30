@@ -20,8 +20,8 @@
 # filename - character. An optional file path for the printed output. 
 # If abcent, the output is printed to the console.
 
-longtable.stargazer = function(..., float = T, longtable.float = F, 
-  longtable.head = T, filename = NULL){
+longtable.stargazer = function(..., float = TRUE, longtable.float = FALSE, 
+  longtable.head = TRUE, filename = NULL){
   # Capturing stargazer to hack it
   require(stargazer)
   res = capture.output(
@@ -30,14 +30,14 @@ longtable.stargazer = function(..., float = T, longtable.float = F,
   # Changing tabulare environment for longtable
     res = gsub("tabular", "longtable", res)
   # removing floating environment
-  if(float == T & longtable.float == F){
+  if(float == TRUE & longtable.float == FALSE){
     res[grep("table", res)[1]] = res[grep("longtable", res)[1]]
     # Removing extra longtable commands
     res = res[-grep("longtable", res)[2]]
     res = res[-length(res)]
   }
   # Adding page headings
-  if(longtable.head == T){
+  if(longtable.head == TRUE){
     res = c(res[1:which(res == "\\hline \\\\[-1.8ex] ")[1] - 1], "\\endhead", res[which(res == "\\hline \\\\[-1.8ex] ")[1]:length(res)])
   }
   # Exporting
@@ -65,5 +65,5 @@ K = as.data.frame(mvrnorm(28, rnorm(k), Sigma))
 m = lm(K)
 
 # Exporting
-longtable.stargazer(m, title = "Output example", align = T, 
+longtable.stargazer(m, title = "Output example", align = TRUE, 
   filename = "output/longtable.stargazer.example.table.tex")
